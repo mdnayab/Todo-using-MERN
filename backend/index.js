@@ -1,7 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv"
 import cors from "cors"
 import allRoutes from './routes/index.js'        //importing all routes which is connected to all controllers 
+
+dotenv.config({
+  path: './.env'
+})
 
 const app = express();
 app.use(express.json())  
@@ -17,7 +22,7 @@ app.get("/", (req, res) => {
 app.use('/api/v1', allRoutes)          //here we especify the routes
 
 mongoose
-  .connect("mongodb+srv://madegamer:made141@cluster0.xq6liil.mongodb.net/todo")
+  .connect(`${process.env.MONGODB_URI}`)
   .then(() => {
     console.log("Connected to MongoDB");
   });
